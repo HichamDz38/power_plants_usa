@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'power_plants_usa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'power_plants_usa',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
+        'NAME': 'fen_power_plants_usa',
+        'USER': 'power_plant',
+        'PASSWORD': 'RTS_452@sdfq_224',
         'HOST': 'localhost',
         'PORT': '5432',
     }
