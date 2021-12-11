@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from visualizer.views import dashboard, import_data
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('dachboard/', dashboard),
+    path('add_data/', import_data),
 ]
