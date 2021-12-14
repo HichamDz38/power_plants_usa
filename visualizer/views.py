@@ -36,4 +36,4 @@ class PlantAPIView(viewsets.ModelViewSet):
     API endpoint for Plant
     """
     queryset = model.Energy.objects.select_related('Plant')
-    #serializer_class = Plant_Serializer
+    serializer_class = Plant_Serializer
