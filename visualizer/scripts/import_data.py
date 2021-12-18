@@ -28,7 +28,9 @@ class Excel_import(Import_data):
             plant_info_model = model.Plant_information
             enery_model = model.Energy
             self.save_plants(plants_sheet, plant_model, plant_info_model)
-            self.save_energy(generators_sheet, plant_model, enery_model)
+            self.save_energy(generators_sheet, plant_model, plant_info_model, enery_model)
+            logger.information('import data done')
+            print('import data done')
         except KeyError as E:
             logger.exception(E)
             return False      
@@ -55,7 +57,7 @@ class Excel_import(Import_data):
                 logger.exception(E)
 
 
-    def save_energy(self, generators_sheet, plant_model, enery_model):
+    def save_energy(self, generators_sheet, plant_model, plant_info_model, enery_model):
         for row in generators_sheet.iter_rows(min_row=3):            
             facility_code = row[3].value
             generator_id = row[4].value
@@ -63,7 +65,8 @@ class Excel_import(Import_data):
             year = self.year
             try:
                 plant = plant_model.objects.get(facility_code=facility_code)
-                enery_model.objects.create(plant=plant, generator_id=generator_id,
+                plant_information = plant_info_model.objects.get(plant=plant)
+                enery_model.objects.create(plant_information=plant_information, generator_id=generator_id,
                                            generator_anual_net=generator_anual_net, year=year)
             except Exception as E:
                 logger.exception(E)
