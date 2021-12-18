@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from . import models as model
+from visualizer import models as model
 
 cities = {
     "AL": "Alabama",
@@ -72,13 +72,13 @@ class Plant_Serializer(serializers.HyperlinkedModelSerializer):
         fields = "__all__"
 
 class Plant_information_Serializer(serializers.HyperlinkedModelSerializer):
-
+    plant = Plant_Serializer(read_only=True)
     class Meta:
         model = model.Plant_information
         fields = "__all__"
 
 class Energy_Serializer(serializers.HyperlinkedModelSerializer):
-
+    plant_information = Plant_information_Serializer(read_only=True)
     class Meta:
         model = model.Energy
         fields = "__all__"
