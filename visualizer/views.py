@@ -31,6 +31,19 @@ def import_data(request, *args, **kwargs):
     context['form'] = form
     return render(request, "add_data.html", context)
 
+def delete_data(request, *args, **kwargs):
+    context = {}
+    try:
+        model.Plant_information.objects().all().delete()
+        model.Energy.objects().all().delete()
+        model.Plant.objects().all().delete()
+        context['result'] = True
+
+    except Exception as E:
+        context['error'] = Energy
+        context['result'] = False
+    return render(request, "delate_data.html", context)
+
 class PlantAPIView(viewsets.ModelViewSet):
     """
     API endpoint for Plant

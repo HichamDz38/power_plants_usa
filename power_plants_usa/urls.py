@@ -25,5 +25,6 @@ router.register(r'energy', views.EnergyAPIView)
 
 urlpatterns = [
     path('add_data/', views.import_data, name='import_data'),
+    path('del_data/', views.delete_data, name='delete_data'),
     path('api/', include(router.urls)),
 ]
