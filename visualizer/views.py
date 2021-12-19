@@ -34,15 +34,15 @@ def import_data(request, *args, **kwargs):
 def delete_data(request, *args, **kwargs):
     context = {}
     try:
-        model.Plant_information.objects().all().delete()
-        model.Energy.objects().all().delete()
-        model.Plant.objects().all().delete()
+        model.Plant_information.objects.all().delete()
+        model.Energy.objects.all().delete()
+        model.Plant.objects.all().delete()
         context['result'] = True
 
     except Exception as E:
-        context['error'] = Energy
+        context['error'] = E
         context['result'] = False
-    return render(request, "delate_data.html", context)
+    return render(request, "delete_data.html", context)
 
 class PlantAPIView(viewsets.ModelViewSet):
     """
@@ -62,5 +62,5 @@ class EnergyAPIView(viewsets.ModelViewSet):
     """
     API endpoint for Plant
     """
-    queryset = model.Energy.objects.prefetch_related('plant').order_by('id')
+    queryset = model.Energy.objects.all().order_by('id')
     serializer_class = Energy_Serializer
