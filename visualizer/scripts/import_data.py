@@ -30,6 +30,7 @@ class Excel_import(Import_data):
             self.save_plants(plants_sheet, plant_model, plant_info_model)
             self.save_energy(generators_sheet, plant_model, plant_info_model, enery_model)
             logger.warning('import data done')
+            return True
         except KeyError as E:
             logger.exception(E)
             return False      

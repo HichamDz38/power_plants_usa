@@ -8,24 +8,29 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions
 from .serializers import Plant_Serializer,Plant_information_Serializer,Energy_Serializer
+from rest_framework.decorators import api_view
+from django.http import Http404
+from rest_framework import generics
 
 
 def handle_uploaded_file(f, year):
+    context = {}
     Excel_import_processor = Excel_import(f, year)
-    return Excel_import_processor.process_import(model)
-
+    return Excel_import_processor.process_import(model)  
 
 def dashboard(request, *args, **kwargs):
     return render(request, "dashboard.html", {})
-
 
 def import_data(request, *args, **kwargs):
     context = {}
     if request.POST:
         form = add_data_Form(request.POST, request.FILES)
         if form.is_valid():
-            status = handle_uploaded_file(request.FILES["data_file"],request.POST['year'])
-            context['status'] = status
+            result = handle_uploaded_file(request.FILES["data_file"],request.POST['year'])
+            if result:
+                context['message'] = 'data imported' 
+            else:
+                context['message'] = 'incorrect file structure' 
     else:
         form = add_data_Form()
     context['form'] = form
@@ -44,23 +49,41 @@ def delete_data(request, *args, **kwargs):
         context['result'] = False
     return render(request, "delete_data.html", context)
 
-class PlantAPIView(viewsets.ModelViewSet):
+class Plant(viewsets.ModelViewSet):
     """
-    API endpoint for Plant
+    API endpoint to retrieve all Plant
     """
     queryset = model.Plant.objects.all().order_by('id')
     serializer_class = Plant_Serializer
 
-class Plant_informationAPIView(viewsets.ModelViewSet):
+class Plant_information_all(viewsets.ModelViewSet):
     """
-    API endpoint for Plant
+    API endpoint to retrieve all Plant informations
     """
     queryset = model.Plant_information.objects.all().order_by('id')
     serializer_class = Plant_information_Serializer
 
-class EnergyAPIView(viewsets.ModelViewSet):
+class Energy_all(viewsets.ModelViewSet):
     """
-    API endpoint for Plant
+    API endpoint to retrieve all Energy
     """
     queryset = model.Energy.objects.all().order_by('id')
     serializer_class = Energy_Serializer
+
+class Plant_information(generics.ListAPIView):
+    """
+    Retrieve Plans informations for the giving year
+    """
+    serializer_class = Plant_information_Serializer
+    def get_queryset(self):
+        year = self.kwargs['year']
+        return model.Plant_information.objects.filter(year=year)
+
+class Energy(generics.ListAPIView):
+    """
+    Retrieve Energies for the giving year
+    """
+    serializer_class = Energy_Serializer
+    def get_queryset(self):
+        year = self.kwargs['year']
+        return model.Energy.objects.filter(year=year)
