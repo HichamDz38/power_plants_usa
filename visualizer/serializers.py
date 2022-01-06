@@ -82,3 +82,9 @@ class Energy_Serializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = model.Energy
         fields = "__all__"
+
+class Energy_Serializer_sum(serializers.HyperlinkedModelSerializer):
+    plant_information = Plant_information_Serializer(read_only=True)
+    class Meta:
+        model = model.Energy
+        fields = ("plant_information","generator_anual_net")
