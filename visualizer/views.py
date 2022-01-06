@@ -3,15 +3,13 @@ from .scripts.import_data import Excel_import
 from django import forms
 from visualizer import models as model
 from .forms import add_data_Form
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import permissions
-from .serializers import Plant_Serializer,Plant_information_Serializer,Energy_Serializer
+from .serializers import *
 from rest_framework.decorators import api_view
 from django.http import Http404
-from rest_framework import generics
-
+from django.db.models import Sum
 
 def handle_uploaded_file(f, year):
     context = {}
@@ -77,7 +75,7 @@ class Plant_information(generics.ListAPIView):
     serializer_class = Plant_information_Serializer
     def get_queryset(self):
         year = self.kwargs['year']
-        return model.Plant_information.objects.filter(year=year)
+        return model.Plant_information.objects.filter(year=year).order_by('id')
 
 class Energy(generics.ListAPIView):
     """
@@ -86,4 +84,15 @@ class Energy(generics.ListAPIView):
     serializer_class = Energy_Serializer
     def get_queryset(self):
         year = self.kwargs['year']
-        return model.Energy.objects.filter(year=year)
+        return model.Energy.objects.filter(year=year).order_by('id')
+
+class Energy_summed(generics.ListAPIView):
+    """
+    Retrieve Energies for the giving year
+    """
+    serializer_class = Energy_Serializer_sum
+    def get_queryset(self):
+        year = self.kwargs['year']
+        result = model.Energy.objects.filter(year=year).values('plant_information').annotate(Sum('generator_anual_net')).order_by('id')
+        print(result)
+        return result
