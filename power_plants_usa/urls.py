@@ -28,6 +28,7 @@ urlpatterns = (
     path('del_data/', views.delete_data, name='delete_data'),
     re_path(r'^plant_information/(?P<year>[0-9]+)/$', views.Plant_information.as_view()),
     re_path(r'^energy/(?P<year>[0-9]+)/$', views.Energy.as_view()),
+    re_path(r'^energy/(?P<year>[0-9]+)/(?P<state>[A-Z]+)/$', views.Energy_by_state.as_view()),
     re_path(r'^energy_sum/(?P<year>[0-9]+)/$', views.Energy_summed.as_view()),
     path('api/', include(router.urls)),
 )
