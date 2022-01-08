@@ -2,12 +2,18 @@
   "name": "front-end-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.13.1",
+    "@googlemaps/react-wrapper": "^1.1.19",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "google-maps-react": "^2.0.6",
+    "leaflet": "^1.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-leaflet": "^3.2.2",
     "react-scripts": "5.0.0",
     "web-vitals": "^2.1.2"
   },
@@ -34,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.7.8"
   }
 }
