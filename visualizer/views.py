@@ -84,7 +84,7 @@ class Energy(generics.ListAPIView):
     serializer_class = Energy_Serializer
     def get_queryset(self):
         year = self.kwargs['year']
-        return model.Energy.objects.filter(year=year).order_by('id')
+        return model.Energy.objects.filter(year=year).exclude(plant_information__plant__longitude=None).exclude(plant_information__plant__latitude=None).order_by('id')
 
 class Energy_summed(generics.ListAPIView):
     """
