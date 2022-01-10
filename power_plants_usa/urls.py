@@ -13,8 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from visualizer import views
 
@@ -26,9 +25,9 @@ router.register(r'energy', views.Energy_all)
 urlpatterns = (
     path('add_data/', views.import_data, name='import_data'),
     path('del_data/', views.delete_data, name='delete_data'),
-    path('plant_information/<int:year>/', views.Plant_information.as_view()),
-    path('energy/<int:year>/', views.Energy.as_view()),
-    path('energy/<int:year>/<str:state>/', views.Energy_by_state.as_view()),
-    path('energy_sum/<int:year>/', views.Energy_summed.as_view()),
+    path('power_plants/<int:year>/', views.Plant_information.as_view()),
+    path('energies/<int:year>/', views.Energy.as_view()),
+    path('energies/<int:year>/<str:state>/', views.Energy_by_state.as_view()),
+    path('energies_sum/<int:year>/', views.Energy_summed.as_view()),
     path('api/', include(router.urls)),
 )

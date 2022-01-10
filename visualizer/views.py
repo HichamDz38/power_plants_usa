@@ -1,15 +1,15 @@
 from django.shortcuts import render
-from .scripts.import_data import Excel_import
 from django import forms
-from visualizer import models as model
-from .forms import add_data_Form
-from rest_framework import viewsets, permissions, generics
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from .serializers import *
-from rest_framework.decorators import api_view
 from django.http import Http404
 from django.db.models import Sum
+from visualizer import models as model
+from rest_framework import viewsets, generics
+from rest_framework.views import APIView
+from .serializers import *
+from .forms import add_data_Form
+from .scripts.import_data import Excel_import
+
+
 
 def handle_uploaded_file(f, year):
     context = {}
