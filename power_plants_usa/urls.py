@@ -26,9 +26,9 @@ router.register(r'energy', views.Energy_all)
 urlpatterns = (
     path('add_data/', views.import_data, name='import_data'),
     path('del_data/', views.delete_data, name='delete_data'),
-    re_path(r'^plant_information/(?P<year>[0-9]+)/$', views.Plant_information.as_view()),
-    re_path(r'^energy/(?P<year>[0-9]+)/$', views.Energy.as_view()),
-    re_path(r'^energy/(?P<year>[0-9]+)/(?P<state>[A-Z]+)/$', views.Energy_by_state.as_view()),
-    re_path(r'^energy_sum/(?P<year>[0-9]+)/$', views.Energy_summed.as_view()),
+    path('plant_information/<int:year>/', views.Plant_information.as_view()),
+    path('energy/<int:year>/', views.Energy.as_view()),
+    path('energy/<int:year>/<str:state>/', views.Energy_by_state.as_view()),
+    path('energy_sum/<int:year>/', views.Energy_summed.as_view()),
     path('api/', include(router.urls)),
 )
