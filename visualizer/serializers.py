@@ -3,7 +3,7 @@ from visualizer import models as model
 
 
 cities = {
-    ""  : "All_cities" 
+    ""  : "All_cities",
     "AL": "Alabama",
     "AK": "Alaska",
     "AS": "American Samoa",
