@@ -94,7 +94,7 @@ class Energy_limited(generics.ListAPIView):
     def get_queryset(self):
         year = self.kwargs['year']
         limit = self.kwargs['limit']
-        return model.Energy.objects.filter(year=year).exclude(plant_information__plant=None).exclude(plant_information__plant__longitude=None).exclude(plant_information__plant__latitude=None).order_by('id')[:limit]
+        return model.Energy.objects.filter(year=year).exclude(plant_information__plant=None).exclude(plant_information__plant__longitude=None).exclude(plant_information__plant__latitude=None).order_by('-generator_anual_net')[:limit]
 
 class Energy_by_state(generics.ListAPIView):
     """
@@ -115,4 +115,4 @@ class Energy_by_state_limited(generics.ListAPIView):
         year = self.kwargs['year']
         state = self.kwargs['state']
         limit = self.kwargs['limit']
-        return model.Energy.objects.filter(year=year).filter(plant_information__plant__state=state).exclude(plant_information__plant__longitude=None).exclude(plant_information__plant__latitude=None).order_by('id')[:limit]
+        return model.Energy.objects.filter(year=year).filter(plant_information__plant__state=state).exclude(plant_information__plant__longitude=None).exclude(plant_information__plant__latitude=None).order_by('-generator_anual_net')[:limit]
