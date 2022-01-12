@@ -26,9 +26,10 @@ class Excel_import(Import_data):
             generators_sheet = book['GEN'+self.year_pre]
             plant_model = model.Plant
             plant_info_model = model.Plant_information
-            enery_model = model.Energy
+            energy_model = model.Energy
+            generator_model = model.Generator
             self.save_plants(plants_sheet, plant_model, plant_info_model)
-            self.save_energy(generators_sheet, plant_model, plant_info_model, enery_model)
+            self.save_energy(generators_sheet, plant_model, plant_info_model, energy_model, generator_model)
             logger.warning('import data done')
             return True
         except KeyError as E:
@@ -57,7 +58,7 @@ class Excel_import(Import_data):
                 logger.exception(E)
 
 
-    def save_energy(self, generators_sheet, plant_model, plant_info_model, enery_model):
+    def save_energy(self, generators_sheet, plant_model, plant_info_model, energy_model, generator_model):
         for row in generators_sheet.iter_rows(min_row=3):            
             facility_code = row[3].value
             generator_id = row[4].value
@@ -66,7 +67,11 @@ class Excel_import(Import_data):
             try:
                 plant = plant_model.objects.get(facility_code=facility_code)
                 plant_information = plant_info_model.objects.get(plant=plant)
-                enery_model.objects.create(plant_information=plant_information, generator_id=generator_id,
-                                           generator_anual_net=generator_anual_net, year=year)
+                energy = energy_model.objects.get(plant_information=plant_information)
+                if not(energy):
+                    energy = energy_model.objects.create(plant_information=plant_information, year=year)
+                
+                generator_model.objects.create(energy=energy, generator_id=generator_id,
+                                           generator_anual_net=generator_anual_net)
             except Exception as E:
                 logger.exception(E)
