@@ -1,1 +1,1 @@
-web: gunicorn power_plant_usa.wsgi 
+web: gunicorn power_plants_usa.wsgi 
