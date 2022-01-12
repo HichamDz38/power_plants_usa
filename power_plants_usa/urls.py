@@ -16,6 +16,8 @@ Including another URLconf
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from visualizer import views
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.views.generic.base import RedirectView
 
 router = DefaultRouter()
 router.register(r'power_plants', views.Plant)
@@ -23,6 +25,7 @@ router.register(r'plant_informations', views.Plant_information_all)
 router.register(r'energies', views.Energy_all)
 
 urlpatterns = (
+    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('img/favicon.ico'))),
     path('add_data/', views.import_data, name='import_data'),
     path('del_data/', views.delete_data, name='delete_data'),
     path('power_plants/<int:year>/', views.Plant_information.as_view()),
