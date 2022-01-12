@@ -86,6 +86,16 @@ class Energy(generics.ListAPIView):
         year = self.kwargs['year']
         return model.Energy.objects.filter(year=year).exclude(plant_information__plant=None).exclude(plant_information__plant__longitude=None).exclude(plant_information__plant__latitude=None).order_by('id')
 
+class Energy_limited(generics.ListAPIView):
+    """
+    Retrieve Energies for the giving year
+    """
+    serializer_class = Energy_Serializer
+    def get_queryset(self):
+        year = self.kwargs['year']
+        limit = self.kwargs['limit']
+        return model.Energy.objects.filter(year=year).exclude(plant_information__plant=None).exclude(plant_information__plant__longitude=None).exclude(plant_information__plant__latitude=None).order_by('id')[:limit]
+
 class Energy_by_state(generics.ListAPIView):
     """
     Retrieve Energies for the giving year/state
@@ -96,13 +106,13 @@ class Energy_by_state(generics.ListAPIView):
         state = self.kwargs['state']
         return model.Energy.objects.filter(year=year).filter(plant_information__plant__state=state).exclude(plant_information__plant__longitude=None).exclude(plant_information__plant__latitude=None).order_by('id')
 
-class Energy_summed(generics.ListAPIView):
+class Energy_by_state_limited(generics.ListAPIView):
     """
-    Retrieve Energies for the giving year
+    Retrieve Energies for the giving year/state
     """
-    serializer_class = Energy_Serializer_sum
+    serializer_class = Energy_Serializer_by_state
     def get_queryset(self):
         year = self.kwargs['year']
-        result = model.Energy.objects.filter(year=year).values('plant_information').annotate(Sum('generator_anual_net')).order_by('id')
-        print(result)
-        return result
+        state = self.kwargs['state']
+        limit = self.kwargs['limit']
+        return model.Energy.objects.filter(year=year).filter(plant_information__plant__state=state).exclude(plant_information__plant__longitude=None).exclude(plant_information__plant__latitude=None).order_by('id')[:limit]

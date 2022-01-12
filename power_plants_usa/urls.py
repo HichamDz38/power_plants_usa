@@ -18,16 +18,17 @@ from rest_framework.routers import DefaultRouter
 from visualizer import views
 
 router = DefaultRouter()
-router.register(r'plant_list', views.Plant)
-router.register(r'plant_information', views.Plant_information_all)
-router.register(r'energy', views.Energy_all)
+router.register(r'power_plants', views.Plant)
+router.register(r'plant_informations', views.Plant_information_all)
+router.register(r'energies', views.Energy_all)
 
 urlpatterns = (
     path('add_data/', views.import_data, name='import_data'),
     path('del_data/', views.delete_data, name='delete_data'),
     path('power_plants/<int:year>/', views.Plant_information.as_view()),
     path('energies/<int:year>/', views.Energy.as_view()),
+    path('energies/<int:year>/<int:limit>/', views.Energy_limited.as_view()),
     path('energies/<int:year>/<str:state>/', views.Energy_by_state.as_view()),
-    path('energies_sum/<int:year>/', views.Energy_summed.as_view()),
+    path('energies/<int:year>/<str:state>/<int:limit>/', views.Energy_by_state_limited.as_view()),
     path('api/', include(router.urls)),
 )

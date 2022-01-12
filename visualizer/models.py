@@ -19,7 +19,6 @@ class Plant_information(models.Model):
 
 class Energy(models.Model):
     plant_information = models.ForeignKey(Plant_information, on_delete=models.CASCADE)
-    generator_id = models.CharField(max_length=10)
-    generator_anual_net = models.DecimalField(default=0, blank=True, null=True, max_digits=15, decimal_places=3)
+    generator_anual_net = models.DecimalField(default=0, blank=False, null=False, max_digits=15, decimal_places=3)
     year = models.IntegerField()
 
