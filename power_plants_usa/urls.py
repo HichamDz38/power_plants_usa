@@ -25,7 +25,7 @@ router.register(r'plant_informations', views.Plant_information_all)
 router.register(r'energies', views.Energy_all)
 
 urlpatterns = (
-    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('img/favicon.ico'))),
+    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('img/favicon.png'))),
     path('add_data/', views.import_data, name='import_data'),
     path('del_data/', views.delete_data, name='delete_data'),
     path('power_plants/<int:year>/', views.Plant_information.as_view()),
@@ -33,5 +33,6 @@ urlpatterns = (
     path('energies/<int:year>/<int:limit>/', views.Energy_limited.as_view()),
     path('energies/<int:year>/<str:state>/', views.Energy_by_state.as_view()),
     path('energies/<int:year>/<str:state>/<int:limit>/', views.Energy_by_state_limited.as_view()),
+    path('energies_summary/<int:year>/', views.Energy_summary.as_view()),
     path('api/', include(router.urls)),
 )
