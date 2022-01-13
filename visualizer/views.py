@@ -74,7 +74,7 @@ class Energy_all(viewsets.ModelViewSet):
 
 class Plant_information(generics.ListAPIView):
     """
-    Retrieve Plans informations for the giving year
+    Retrieve Plans informations for the given year
     """
     serializer_class = Plant_information_Serializer
     def get_queryset(self):
@@ -83,7 +83,7 @@ class Plant_information(generics.ListAPIView):
 
 class Energy(generics.ListAPIView):
     """
-    Retrieve Energies for the giving year
+    Retrieve Energies for the given year
     """
     serializer_class = Energy_Serializer
     def get_queryset(self):
@@ -92,7 +92,7 @@ class Energy(generics.ListAPIView):
 
 class Energy_limited(generics.ListAPIView):
     """
-    Retrieve Energies for the giving year
+    Retrieve Energies for the given year
     """
     serializer_class = Energy_Serializer
     def get_queryset(self):
@@ -102,7 +102,7 @@ class Energy_limited(generics.ListAPIView):
 
 class Energy_by_state(generics.ListAPIView):
     """
-    Retrieve Energies for the giving year/state
+    Retrieve Energies for the given year/state
     """
     serializer_class = Energy_Serializer_by_state
     def get_queryset(self):
@@ -112,7 +112,7 @@ class Energy_by_state(generics.ListAPIView):
 
 class Energy_by_state_limited(generics.ListAPIView):
     """
-    Retrieve Energies for the giving year/state
+    Retrieve Energies for the given year/state
     """
     serializer_class = Energy_Serializer_by_state
     def get_queryset(self):
@@ -120,3 +120,13 @@ class Energy_by_state_limited(generics.ListAPIView):
         state = self.kwargs['state']
         limit = self.kwargs['limit']
         return model.Energy.objects.filter(year=year).filter(plant_information__plant__state=state).exclude(plant_information__plant__longitude=None).exclude(plant_information__plant__latitude=None).order_by('-generator_anual_net')[:limit]
+
+class Energy_summary(generics.ListAPIView):
+    """
+    Retrieve summarised Energies by states for the given year
+    """
+    serializer_class = Energy_summary_Serializer
+    def get_queryset(self):
+        year = self.kwargs['year']
+        data = model.Energy.objects.filter(year=year).values("plant_information__plant__state").annotate(total_annual_net=Sum("generator_anual_net"))
+        return data

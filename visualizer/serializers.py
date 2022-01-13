@@ -25,3 +25,18 @@ class Energy_Serializer_by_state(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = model.Energy
         fields = "__all__"
+
+class Energy_summary_Serializer(serializers.HyperlinkedModelSerializer):
+    total_annual_net = serializers.DecimalField(max_digits=15,decimal_places=3, read_only=True)
+    plant_information__plant__state = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = model.Energy
+        fields = ['total_annual_net','plant_information__plant__state']
+    """
+    def to_representation(self, instance):
+        return {
+            "total_annual_net": total_annual_net,
+            "state":plant_information__plant__state
+        }
+"""
