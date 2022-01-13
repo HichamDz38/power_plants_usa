@@ -80,18 +80,25 @@ WSGI_APPLICATION = 'power_plants_usa.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'fen_power_plants_usa',
-        'USER': 'power_plant',
-        'PASSWORD': 'RTS_452@sdfq_224',
-        'HOST': 'localhost',
+        'NAME': 'd90p1tavkkjv4h',
+        'USER': 'qlytnnenfgrrxr',
+        'PASSWORD': '1a8b28b8e7c99a5c4ce63197cd671b9565408a1e0ae05d46624bacf2eb105c92',
+        'HOST': 'ec2-18-234-17-166.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
+"""
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'power_plant_database',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

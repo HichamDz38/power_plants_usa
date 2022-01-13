@@ -12,12 +12,11 @@ from .scripts.import_data import Excel_import
 
 
 def handle_uploaded_file(f, year):
-    file_name = 'egrid2016_data.xlsx'
-    """
+    file_name = 'uploaded_file_{}'.format(f)
     with open(file_name, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
-    """
+    context = {}
     Excel_import_processor = Excel_import(file_name, year)
     return Excel_import_processor.process_import(model)  
 
