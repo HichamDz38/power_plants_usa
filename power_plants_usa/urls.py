@@ -34,5 +34,6 @@ urlpatterns = (
     path('energies/<int:year>/<str:state>/', views.Energy_by_state.as_view()),
     path('energies/<int:year>/<str:state>/<int:limit>/', views.Energy_by_state_limited.as_view()),
     path('energies_summary/<int:year>/', views.Energy_summary.as_view()),
+    path('years/', views.Data_years.as_view()),
     path('api/', include(router.urls)),
 )

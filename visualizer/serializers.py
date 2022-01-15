@@ -33,10 +33,9 @@ class Energy_summary_Serializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = model.Energy
         fields = ['total_annual_net','plant_information__plant__state']
-    """
-    def to_representation(self, instance):
-        return {
-            "total_annual_net": total_annual_net,
-            "state":plant_information__plant__state
-        }
-"""
+
+class Data_year_Serializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = model.Energy
+        fields = ['year']

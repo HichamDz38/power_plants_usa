@@ -130,3 +130,12 @@ class Energy_summary(generics.ListAPIView):
         year = self.kwargs['year']
         data = model.Energy.objects.filter(year=year).values("plant_information__plant__state").annotate(total_annual_net=Sum("generator_anual_net"))
         return data
+
+class Data_years(generics.ListAPIView):
+    """
+    Retrieve the years of the datas present in the database, so the used can select the year instead of typing
+    """
+    serializer_class = Data_year_Serializer
+    def get_queryset(self):
+        data = model.Energy.objects.all().values("year").distinct()
+        return data
