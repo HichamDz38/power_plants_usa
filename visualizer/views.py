@@ -7,7 +7,7 @@ from rest_framework import viewsets, generics
 from rest_framework.views import APIView
 from .serializers import *
 from .forms import add_data_Form
-from .scripts.import_data import Excel_import
+from .scripts.import_data import Pandas_import
 
 
 
@@ -17,8 +17,8 @@ def handle_uploaded_file(f, year):
         for chunk in f.chunks():
             destination.write(chunk)
     context = {}
-    Excel_import_processor = Excel_import(file_name, year)
-    return Excel_import_processor.process_import(model)  
+    Pandas_import_processor = Pandas_import(file_name, year)
+    return Pandas_import_processor.process_import(model)  
 
 def dashboard(request, *args, **kwargs):
     return render(request, "dashboard.html", {})
